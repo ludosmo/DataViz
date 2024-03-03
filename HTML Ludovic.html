@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<!-- head -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>MSc Finance & Big Data - Data visualization 2023</title>
+
+  <!-- bulma and font awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" crossorigin="anonymous">
+</head>
+
+<!-- body -->
+<body>
+
+  <!-- header -->
+  <section class="hero is-info is-bold">
+    <!-- todo: change assignment and name -->
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Efficient frontier using 3 risky assets
+        </h1>
+        <h2 class="subtitle">
+          LEPRINCE Ludovic
+        </h2>
+      </div>
+    </div>
+
+    <!-- change navigation if needed -->
+    <div class="hero-foot">
+      <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+
+          <div class="navbar-brand">
+            <a class="navbar-item" href="#top">
+              <span class="icon">
+                <i class="fas fa-home"></i>
+              </span>
+              <span>Home</span>
+            </a>
+          </div>
+
+          <div id="main-navbar" class="navbar-menu">
+            <a class="navbar-item" href="#viz1">
+              <span class="icon">
+                <i class="fas fa-chart-area"></i>
+              </span>
+              <span>Efficient Frontier with python</span>
+            </a>
+          </div>
+          <div class="navbar-end">
+            <a class="navbar-item" href="#about">
+              <span class="icon">
+                <i class="fas fa-info-circle"></i>
+              </span>
+              <span>About</span>
+            </a>
+          </div>
+
+        </nav>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container content">
+      <!-- modify if necessary (move visualizations in separate pages) -->
+      <h1 id="viz1"> Compute the Efficient Frontier using Python </h2>
+
+      
+      
+      <p>
+        In this study, we will focus on utilizing three major American tech giants: Apple, Microsoft, and Google. We aim to explore how, through the strategic combination of these three stocks, we can construct various portfolios and subsequently chart the efficient frontier. This approach will allow us to understand the balance between risk and return, providing valuable insights into optimal portfolio construction in the tech sector.
+      </p>
+
+      <h3>Requirements</h3>
+
+      <p>
+        Before delving into this study, it is essential to have a basic knowledge of Harry Markowitz's Modern Portfolio Theory (MPT). 
+        A preliminary understanding of key principles such as portfolio diversification, balancing risk and return and the concept of the efficient frontier is necessary. 
+        This knowledge will greatly assist in understanding the methodologies and ideas discussed.
+     
+      
+      </p>
+
+      <h3>Used Librairis to compute this project</h3>
+
+      <p>
+        Here is the list of librairis used in this project: 
+        <br> 
+        <br>YahooFinance : Essential for collecting data
+        <br>Pandas / PandasDataReader : Data manipulation
+        <br>Numpy : Mathematics library required for certain operations
+        <br>Scipy : For the optimization of the portfolios
+        <br>Matplotlib and Seaborn : For the visualizations
+      </p>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container content">
+      <!-- modify if necessary (move visualizations in separate pages) -->
+      <h2 id="viz1">Data Collection</h2>
+
+      <h3>Upload the time series</h3>
+
+      <p>
+        From Yahoo Finance, we are collecting daily data on the closing prices of apple google and mcirosoft from 2010 to 2024.
+      </p>
+      <img id="series" width="100%" height="300" src="timeseries.png" style="background-color: whitesmoke">
+      <p>
+        We can see that all 3 stocks are trending upwards in a similar trend.
+        <br>However, to see how the activities really behave, it is preferable to compute the returns of these time series. This will allow us to compare them
+     
+    <img id="returns" width="100%" height="300" src="returns.png" style="background-color: whitesmoke">
+      
+      </p>
+      By ploting this graph, we can reveals the presence of extreme values for all three tech stocks, indicating significant volatility. However, this visual alone is insufficient for constructing our diversified risky portfolios, as it does not provide deeper insights into the underlying factors or the correlation between the stocks.
+      <p>
+    <section class="section">
+        <div class="container content">
+        <!-- modify if necessary (move visualizations in separate pages) -->
+        <h2>Computing efficient portfolio</h2>
+        <p>
+         Now that we have our 3 stocks, let's work out how to create a risky portfolio with these 3 assets. 
+        </p>
+        <h3>Covariance Matrix between the 3 stocks</h3>
+        <p>
+        In Modern Portfolio Theory (MPT), a covariance matrix is vital as it quantifies the degree to which two stocks move in relation to each other. High covariance between two assets implies that they tend to move in tandem, which can increase the portfolio's risk. In contrast, assets with lower covariance can provide better diversification, reducing unsystematic risk and potentially improving the risk-return profile of the portfolio. Understanding these relationships through the covariance matrix is key to constructing an efficient frontier, aiming for maximum return for a given level of risk.
+        </p>
+
+      <img id="CovMatrix" width="80%" height="200" src="cov_matrix_heatmap.png" style="background-color: whitesmoke">
+      <p>
+        The diagonal, representing the variance of each stock, shows that each company has a distinct level of volatility. Off-diagonal elements, which represent the covariance between different stocks, suggest a moderate positive relationship between the stock returns. This implies that while the stocks do move in concert to some degree, they maintain enough independence to be considered for diversification within a portfolio, in line with the principles of Modern Portfolio Theory.
+        <br>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content">
+    <!-- modify if necessary (move visualizations in separate pages) -->
+    
+    <h3>Minimum Variance Portfolio</h3>
+    <p>
+     Using the covariance matrix derived from our data, our Python script pinpoints the asset combination that minimizes portfolio variance.
+
+      We've harnessed key Python libraries, such as NumPy for numerical calculations and SciPy's optimization tools. The script calculates stock characteristics from daily returns, and functions to determine the portfolio's annualized return and volatility are defined. 
+      <br>Our optimization hinges on SciPy's 'minimize' function, aiming to find the lowest variance portfolio subject to our constraints on asset weights. 
+    </p>
+    <h3>Optimal Risky Portfolio</h3>
+    <p>
+      For the Optimal Risky Portfolio, our programming approach is tailored to maximize the Sharpe Ratio by employing Python's numerical and optimization libraries, NumPy and SciPy. The Sharpe Ratio is a critical measure of risk-adjusted return, with a higher ratio indicating a more desirable outcome. 
+      <br> In this project, we assume that the risk-free rate is equal to 5 %
+    </p>
+  <img id="PieChart" width="80%" height="200" src="piechart.png" style="background-color: whitesmoke">
+  <p>
+    The Minimum Variance Portfolio is crafted with a cautious investor in mind, featuring a diversified spread among Apple, Google, and Microsoft. The investment weights are distributed more uniformly, preventing any one stock from overly influencing the portfolio's performance. 
+    <br>Conversely, the Tangency Portfolio, or the Optimal Risky Portfolio, caters to those seeking more aggressive growth, which is reflected in its substantial weighting towards Apple.
+    <br>
+    <br>
+    Warning : Given that optimization algorithms, like the 'SLSQP' method from SciPy used in our code, are inherently designed to minimize rather than maximize functions, we adapt by considering the negative Sharpe Ratio.  Such a concentrated investment in a single entity elevates the potential for greater gains, yet it also heightens the portfolio's susceptibility to the swings in Apple's stock prices.
+  </p>
+</div>
+</section>
+  <section class="section">
+    <div class="container content">
+      <!-- modify if necessary (move visualizations in separate pages) -->
+      <h2 id="viz1"> Efficient Frontier with 10000 random Weighted Portfolio</h2>
+      <p>
+        Following the creation of our initial two portfolios, we are now proceeding to simulate 10,000 risky portfolios. The allocation of weights within these portfolios will be determined arbitrarily. This method allows us to capture a wide array of potential portfolio compositions, reflecting the diverse strategies that investors might employ.
+      </p>
+      <img id="Efficient Frontier" width="100%" height="300" src="EfficientFrontier.png" style="background-color: whitesmoke">
+      </svg>
+
+      <h3>What we can conclude ? </h3>
+
+      <p>
+        The efficient frontier is drawn along the top edge, and the optimal risk portfolio is marked with a star, highlighting the maximum Sharpe ratio achieved. Shares in Apple, Microsoft and Google are highlighted, as is the minimum variance portfolio, providing a clear and concise overview of risk, return and optimal investment choices.
+        <br>We have succeeded in building an efficient border with our 3 different assets. The difficulty of this project was that as soon as we wanted to create portfolios with more than 2 assets, it was practically impossible to do without librairis like Scipy to use the opitmisation functions.
+      </p>
+
+      <h3>References</h3>
+
+      <p>
+        YahooFinance ->
+        <a href="https://fr.finance.yahoo.com/"> Collect data</a>
+        <br>
+        Closing prices of shares used in this project -> <a href="data.csv" download="data.csv">Download csv file</a>
+        <br>
+        GitHub Project -> <a href="https://github.com/ludosmo/DataViz/"> Go to the project's github</a>
+
+        
+      </p>
+    </div>
+  </section>
+
+
+
+
+
+
+  <hr class="container">
+
+  <!-- about section -->
+  <!-- fill in, or link to a personal web page  -->
+  <section class="section">
+    <div class="container content">
+      <h2 id="about">
+        About Me
+      </h2>
+
+      <div class="media">
+        <div class="media-left">
+          <p class="image is-128x128">
+            <!-- replace with your profile image -->
+            <img src="Picture-Ludovic.png">
+          </p>
+        </div>
+
+        <div class="media-content">
+            <p>
+              <!-- replace with your information -->
+              <strong>Leprince Ludovic</strong>
+              <br/>
+              Hello ! I am currently honing my skills and expanding my knowledge at NEOMA Business School, where I am deeply immersed in the intricacies of business and finance. Parallel to my academic pursuits, I serve as an Assistant Trader at the Medium-Long Term Funding desk of Crédit Agricole CIB (CACIB), where I apply my theoretical knowledge to real-world financial challenges, focusing on funding strategies and market dynamics. 
+              <br>
+              I harbor a profound passion for market finance and the transformative potential of software development within this realm. With a solid foundation in Python, R, and VBA. I've embarked on numerous projects that not only demonstrate my programming skills but also my commitment to leveraging technology to solve complex financial problems. From financial modeling to the development of analytical tools, my work aims to enhance decision-making and operational efficiency in the finance sector. 
+              <br>
+              My GitHub is a curated portfolio of my endeavors in bridging finance and technology, showcasing a range of projects that speak to my expertise and dedication. 
+              I am eager to connect with professionals and enthusiasts who share my interests in the fusion of finance and technology. 
+              If you're keen on discussing innovative solutions, exploring new projects, or simply connecting over shared interests, please do not hesitate to reach out 
+              on LinkedIn to share projects and, let's hope, work together on new subjects !
+              <br/>
+              <!-- find brand icons at: https://fontawesome.com/icons?d=gallery&s=brands&m=free -->
+              <a href="https://github.com/ludosmo">
+                <span class="fab fa-github"></span>
+                <span>Github</span>
+              </a>
+              &bullet;
+              <a href="https://www.linkedin.com/in/ludovic-leprince-2bb31419b/">
+                <span class="fab fa-linkedin"></span>
+                <span>LinkedIn</span>
+              </a>
+            </p>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <small>
+        <a href="#top">
+          <span class="fas fa-arrow-up"></span>
+          <span>Back to Top</span>
+        </a>
+        <br/>
+        <a href="https://www.neoma-bs.fr/formations/masteres-specialises-masters-of-science-temps-partiel/msc-in-finance-and-big-data/presentation-du-programme">MSc Finance & Big Data / Data visualization</a>
+        &bullet;
+        <a href="https://https://www.neoma-bs.fr/">Neoma Business School</a>
+      </small>
+    </div>
+  </footer>
+
+</body>
+</html>
